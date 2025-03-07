@@ -148,13 +148,8 @@ The driver processes the response and returns to user space:
 - **Fault**: Any response that is neither a valid Pass nor Fail (e.g., INPUT_CHECKSUM_BAD set, checksum mismatch, or other invalid STATUS combinations) → returns `-EIO` (-5).
 - **Timeout**: No response within 10 ms → returns `-ETIMEDOUT` (-110).
 
-```
-[Diagram: Error Handling States]
-Pass: [PASS=1, FAIL=0, INPUT_CHECKSUM_BAD=0, Checksum OK] -> Buffer: 1, Return: 1
-Fail: [PASS=0, FAIL=1, INPUT_CHECKSUM_BAD=0, Checksum OK] -> Buffer: 0, Return: 1
-Fault: [Any response not Pass or Fail, e.g., INPUT_CHECKSUM_BAD=1, Checksum mismatch, or invalid STATUS] -> Return: -EIO (-5)
-Timeout: [No response within 10 ms] -> Return: -ETIMEDOUT (-110)
-```
+<img width="428" alt="image" src="https://github.com/user-attachments/assets/9ffb6030-04b1-418a-9886-bceca3d22798" />
+
 
 ### Detailed Usage Example
 
