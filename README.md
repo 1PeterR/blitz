@@ -31,7 +31,7 @@ Recent work by @hypernyan (early 2024) integrated Schnorr validation, while Pete
 
 ### Current Performance
 
-Preliminary benchmarking of Blitz V0.2 suggests a throughput of approximately 184,000 signature operations per second. This estimate is derived from the latency of a single Schnorr signature verification, multiplied by the five elliptic curve multiplier cores, each supporting two threads. Final measurements, including power consumption, await PCIe integration and comprehensive testing planned for the short-term roadmap.
+Preliminary benchmarking of Blitz V0.1 suggests a throughput of approximately 184,000 signature operations per second. This estimate is derived from the latency of a single Schnorr signature verification, multiplied by the five elliptic curve multiplier cores, each supporting two threads. Final measurements, including power consumption, await PCIe integration and comprehensive testing planned for the short-term roadmap.
 
 ### Current USB Functionality
 
