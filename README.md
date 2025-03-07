@@ -133,6 +133,20 @@ The driver uses these to confirm results and detect errors.
 
 ### Error Handling
 
+### Error Codes
+
+| Error Code   | Reason                                                                 | Affects    |
+|--------------|-----------------------------------------------------------------------|------------|
+| `EAGAIN`     | Driver or card buffer is full, cannot accept more data at this time   | Write      |
+| `EINVAL`     | Write is not exactly 160 bytes or offset is not 0                     | Write      |
+| `ENODEV`     | Card has crashed or is missing (e.g., bus disconnect)                 | Read, Write|
+| `EPROTO`     | Checksum failure detected by card on the 160-byte packet sent         | Read       |
+| `EBADMSG`    | Checksum failure in the response from the card                        | Read       |
+| `EIO`        | Internal hardware failure in the accelerator (core error)             | Read       |
+| `ETIMEDOUT`  | Timeout waiting for card to process 160 bytes and return a response   | Read       |
+
+### Error discussion
+
 Error handling is managed exclusively by the Linux kernel driver, ensuring robust signature verification across the PCIe interface. The process is as follows:
 
 - The kernel driver assigns each request an 8-bit ID tag (byte 160) and calculates an 8-bit checksum (byte 161) by XORing bytes 0–160 (signature data + tag), then sends the 162-byte string to the card via PCIe.
