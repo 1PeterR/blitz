@@ -35,7 +35,7 @@ Preliminary benchmarking of Blitz V0.2 suggests a throughput of approximately 18
 
 ### Current USB Functionality
 
-Currently, Blitz leverages its USB interface for FPGA configuration and basic debugging. When connected to a computer with the Efinix Efinity Software installed, Blitz appears as an Efinix development kit. Users should follow the installation instructions for the Efinix Ti60 development kit (available from Efinix documentation), particularly the section on installing USB FTDI drivers, to ensure proper recognition and communication. The JTAG master enables bitstream loading, while UART 1 supports low-bandwidth debug commands (e.g., core status checks), with full signature verification pending PCIe implementation.
+Currently, Blitz leverages its USB interface for FPGA configuration and basic debugging. When connected to a computer with the Efinix Efinity Software installed, Blitz appears as an Efinix development kit. Users should follow the installation instructions for the Efinix Ti60 development kit (available from Efinix documentation), particularly the section on installing USB FTDI drivers, to ensure proper recognition and communication. The JTAG master enables bitstream loading, while UART 1 supports low-bandwidth signature checking, communication and debugging.
 
 ## Data Flow (Planned)
 
