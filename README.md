@@ -57,6 +57,11 @@ os.close(fd)
 
 A 160-byte write (64-byte public key, 32-byte hash, 64-byte signature) triggers verification. The driver writes a single byte to the user-space buffer: 1 for a valid signature (PASS bit), 0 for an invalid signature (FAIL bit), blocking until complete. Errors (e.g., faults, timeouts) raise an `OSError`, detailed later.
 
+The following diagram illustrates the high-level data flow:
+
+<img width="673" alt="image" src="https://github.com/user-attachments/assets/8ed47cd3-8a29-4985-a91c-960d66cd4f61" />
+
+
 #### Multi-threading
 
 Blitz supports up to 256 simultaneous pending requests. The kernel driver manages response matching, ensuring each thread receives its corresponding result. To the application, Blitz appears identical across all threads—each can write and read concurrently without explicit synchronization. This design enables significantly higher throughput than single-threaded operation, as unblocked threads remain active while others await read completion.
