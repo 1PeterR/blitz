@@ -45,7 +45,7 @@ Blitz, a memory-mapped PCIe device, will enable high-throughput signature verifi
 
 The driver offers a simple file-like interface:
 
---- Python Code Start ---
+```python
 import os
 fd = os.open("/dev/blitz", os.O_RDWR)
 os.write(fd, pubkey + signing_hash + signature)  # 160-byte string: 64 + 32 + 64 bytes
@@ -53,7 +53,7 @@ result = os.read(fd, 1)
 if ord(result) == 1:
     print("VERIFIED")
 os.close(fd)
---- Python Code End ---
+```
 
 A 160-byte write (64-byte public key, 32-byte hash, 64-byte signature) triggers verification. The driver writes a single byte to the user-space buffer: 1 for a valid signature (PASS bit), 0 for an invalid signature (FAIL bit), blocking until complete. Errors (e.g., faults, timeouts) raise an `OSError`, detailed later.
 
@@ -65,7 +65,7 @@ Blitz supports up to 256 simultaneous pending requests. The kernel driver manage
 
 Two registers—162-byte input FIFO (BAR0) and 2-byte output FIFO (BAR1)—are assigned dynamic addresses at boot, queryable via `lspci` or `/sys/bus/pci/devices/<device>/resource`. Root access via `/dev/mem` allows signatures to be written and results to be read manually, bypassing the kernel driver:
 
---- Python Code Start ---
+```python
 import os
 import mmap
 fd = os.open("/dev/mem", os.O_RDWR | os.O_SYNC)
@@ -77,7 +77,7 @@ bar0[0:160] = pubkey + signing_hash + signature
 if ord(bar1[0:1]) & 0x01:
     print("VERIFIED")
 bar0.close(); bar1.close(); os.close(fd)
---- Python Code End ---
+```
 
 #### Address Assignment and Mapping
 
@@ -89,14 +89,14 @@ Blitz (V0.2) has five elliptic curve multiplier cores, each with two threads, ve
 
 The input FIFO (162 bytes wide, 16 entries, 2592 bytes total) and 2-byte output FIFO interface with the host. The driver’s 256-request buffer exceeds V0.2’s capacity, with ASICs planned to scale hardware closer to this limit.
 
---- Diagram Start ---
+```
 [Diagram: Data Flow with PCIe and FIFOs]
 User Space -> Kernel Driver (160B + Tag + Checksum) -> PCIe -> Input FIFO (162B x 16) -> 5 Cores (10 Threads) -> Output FIFO (2B) -> Driver -> User Space
---- Diagram End ---
+```
 
 The accelerator core’s module declaration is:
 
---- Verilog Code Start ---
+```verilog
 module schnorr_accelerator (
     output reg [15:0] out,      // 2-byte output (STATUS, TAG)
     output full,
@@ -105,7 +105,7 @@ module schnorr_accelerator (
     input push,                 // PUSH from PCIe
     input pull                  // PULL from accelerator
 );
---- Verilog Code End ---
+```
 
 #### Input FIFO
 
@@ -143,19 +143,19 @@ The driver processes the response and returns to user space:
 - **Fault**: Any response that is neither a valid Pass nor Fail (e.g., INPUT_CHECKSUM_BAD set, checksum mismatch, or other invalid STATUS combinations) → returns `-EIO` (-5).
 - **Timeout**: No response within 10 ms → returns `-ETIMEDOUT` (-110).
 
---- Diagram Start ---
+```
 [Diagram: Error Handling States]
 Pass: [PASS=1, FAIL=0, INPUT_CHECKSUM_BAD=0, Checksum OK] -> Buffer: 1, Return: 1
 Fail: [PASS=0, FAIL=1, INPUT_CHECKSUM_BAD=0, Checksum OK] -> Buffer: 0, Return: 1
 Fault: [Any response not Pass or Fail, e.g., INPUT_CHECKSUM_BAD=1, Checksum mismatch, or invalid STATUS] -> Return: -EIO (-5)
 Timeout: [No response within 10 ms] -> Return: -ETIMEDOUT (-110)
---- Diagram End ---
+```
 
 ### Detailed Usage Example
 
 For robust applications, handle errors explicitly. In C:
 
---- C Code Start ---
+```C
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
@@ -177,11 +177,11 @@ if (n == 1) {
     printf("Unexpected Error: %zd\n", n);
 }
 close(fd);
---- C Code End ---
+```
 
 In Python:
 
---- Python Code Start ---
+```python
 import os
 import errno
 fd = os.open("/dev/blitz", os.O_RDWR)
@@ -200,7 +200,7 @@ except OSError as e:
     else:
         print(f"Unexpected Error: {e}")
 os.close(fd)
---- Python Code End ---
+```
 
 ## Roadmap
 
