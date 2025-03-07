@@ -59,7 +59,7 @@ A 160-byte write (64-byte public key, 32-byte hash, 64-byte signature) triggers 
 
 The following diagram illustrates the high-level data flow:
 
-<img width="673" alt="image" src="https://github.com/user-attachments/assets/8ed47cd3-8a29-4985-a91c-960d66cd4f61" />
+<img width="646" alt="image" src="https://github.com/user-attachments/assets/50edc038-9591-42a8-8f0f-6d6c76193dc4" />
 
 
 #### Multi-threading
