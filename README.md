@@ -135,15 +135,16 @@ The driver uses these to confirm results and detect errors.
 
 ### Error Codes
 
-| Error Code   | Reason                                                                 | Affects    |
-|--------------|-----------------------------------------------------------------------|------------|
-| `EAGAIN`     | Driver or card buffer is full, cannot accept more data at this time   | Write      |
-| `EINVAL`     | Write is not exactly 160 bytes or offset is not 0                     | Write      |
-| `ENODEV`     | Card has crashed or is missing (e.g., bus disconnect)                 | Read, Write|
-| `EPROTO`     | Checksum failure detected by card on the 160-byte packet sent         | Read       |
-| `EBADMSG`    | Checksum failure in the response from the card                        | Read       |
-| `EIO`        | Internal hardware failure in the accelerator (core error)             | Read       |
-| `ETIMEDOUT`  | Timeout waiting for card to process 160 bytes and return a response   | Read       |
+| Error Code | Reason                                                    | Affects     |
+|------------|-----------------------------------------------------------|-------------|
+| `EAGAIN`   | Driver or card buffer is full, cannot accept more data at this time | Write       |
+| `EINVAL`   | Write is not exactly 160 bytes or offset is not 0         | Write       |
+| `EINVAL`   | Read requested size is not 1 byte or offset is not 0      | Read        |
+| `ENODEV`   | Card has crashed or is missing (e.g., bus disconnect)     | Read, Write |
+| `EPROTO`   | Checksum failure detected by card on the 160-byte packet sent | Read    |
+| `EBADMSG`  | Checksum failure in the response from the card            | Read        |
+| `EIO`      | Internal hardware failure in the accelerator (core error) | Read        |
+| `ETIMEDOUT`| Timeout waiting for card to process 160 bytes and return a response | Read |
 
 ### Error discussion
 
