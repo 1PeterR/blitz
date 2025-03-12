@@ -6,10 +6,11 @@ Blitz is a compact, low-power  M.2 card designed to offload digital signature ve
 
 Blitz (V0.2) is a FPGA-based 22mm x 30mm M.2 card with A + E keying, a form factor common to Bluetooth/Wi-Fi cards and accelerators like the [Google Coral M.2 Accelerator A+E](https://coral.ai/products/m2-accelerator-ae). Most modern computers have a compatible M.2 slot, ensuring wide adaptability.
 
-![image](https://github.com/user-attachments/assets/2ce8920e-6bc0-4404-b884-7be84cb6e6e8)
-![image](https://github.com/user-attachments/assets/9760bd0d-a947-44f6-adbe-24b8ac80d0da)
-![image](https://github.com/user-attachments/assets/2830a46e-7e59-4323-8f3c-71a3beb24477)
-
+<div>
+  <img src="https://github.com/user-attachments/assets/2ce8920e-6bc0-4404-b884-7be84cb6e6e8" alt="Image 1" style="width: 33%;" />
+  <img src="https://github.com/user-attachments/assets/9760bd0d-a947-44f6-adbe-24b8ac80d0da" alt="Image 2" style="width: 33%;" />
+  <img src="https://github.com/user-attachments/assets/2830a46e-7e59-4323-8f3c-71a3beb24477" alt="Image 3" style="width: 33%;" />
+</div>
 
 ## Communication Interfaces
 
